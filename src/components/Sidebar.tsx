@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { clearTokens } from '@/lib/api';
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard', icon: 'home' },
@@ -41,6 +42,7 @@ function Icon({ name }: { name: string }) {
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <aside className="w-64 bg-navy text-white flex flex-col shrink-0 min-h-screen">
@@ -77,11 +79,20 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="mx-4 mb-6 rounded-xl bg-white/5 p-4">
+      <div className="mx-4 mb-4 rounded-xl bg-white/5 p-4">
         <div className="text-sm font-medium text-saffron mb-1">Need help?</div>
         <p className="text-xs text-white/60 mb-3">We're here to help you make the most of your Sikh ID.</p>
         <button className="w-full text-xs border border-white/20 rounded-md py-2 hover:bg-white/10 transition-colors">
           Contact support
+        </button>
+      </div>
+
+      <div className="px-4 mb-6">
+        <button
+          onClick={() => { clearTokens(); router.push('/login'); }}
+          className="w-full text-xs border border-white/20 rounded-md py-2 text-white/70 hover:bg-white/5 transition-colors"
+        >
+          Log out
         </button>
       </div>
     </aside>
