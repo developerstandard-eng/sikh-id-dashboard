@@ -36,8 +36,16 @@ async function request(path: string, options: RequestInit = {}) {
 // --- Auth (standalone login — normally a user arrives here already
 // authenticated via the WordPress plugin's SSO redirect, which drops the
 // token in the URL; see useAuthFromUrl() in lib/useAuth.ts) ---
+// Goes through this app's own /api/login route (not directly to the
+// backend) so the site secret is attached server-side and never reaches
+// the browser bundle — see src/app/api/login/route.ts.
 export const login = (email: string, password: string) =>
-  request('/api/v1/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) });
+  fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) })
+    .then(async (res) => {
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.message || data?.error || `Request failed (${res.status})`);
+      return data;
+    });
 
 // --- Profile ---
 export const getMyProfile = () => request('/api/v1/profile/me');
