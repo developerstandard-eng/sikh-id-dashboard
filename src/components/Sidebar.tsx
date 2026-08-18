@@ -8,8 +8,8 @@ const NAV_ITEMS = [
   { label: 'My Profile', href: '/dashboard/profile', icon: 'user' },
   { label: 'My Activity', href: '/dashboard/activity', icon: 'activity' },
   { label: 'Saved & Favourites', href: '/dashboard/saved', icon: 'star' },
-  { label: 'Messages', href: '/dashboard/messages', icon: 'mail', badge: 3 },
-  { label: 'Notifications', href: '/dashboard/notifications', icon: 'bell', badge: 7 },
+  { label: 'Messages', href: '/dashboard/messages', icon: 'mail' },
+  { label: 'Notifications', href: '/dashboard/notifications', icon: 'bell' },
   { label: 'Settings', href: '/dashboard/settings', icon: 'settings' },
   { label: 'Help & Support', href: '/dashboard/help', icon: 'help' },
 ];
@@ -72,11 +72,6 @@ export default function Sidebar() {
                 <Icon name={item.icon} />
                 {item.label}
               </span>
-              {item.badge ? (
-                <span className="text-[11px] bg-saffron/90 text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center">
-                  {item.badge}
-                </span>
-              ) : null}
             </Link>
           );
         })}

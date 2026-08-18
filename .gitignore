@@ -1,6 +1,7 @@
 node_modules/
 .next/
 .env.local
+*.tsbuildinfo
 *.log
 npm-debug.log*
 .DS_Store
