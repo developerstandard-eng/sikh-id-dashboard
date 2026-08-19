@@ -44,10 +44,13 @@ async function refreshAccessToken(): Promise<string | null> {
 
 async function request(path: string, options: RequestInit = {}, retryOn401 = true): Promise<any> {
   const token = getToken();
+  // FormData (photo upload) needs the browser to set its own multipart
+  // boundary in Content-Type — forcing application/json here would break it.
+  const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
   const res = await fetch(`${API_BASE}${path}`, {
     ...options,
     headers: {
-      'Content-Type': 'application/json',
+      ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...(options.headers || {}),
     },
@@ -99,6 +102,12 @@ export const getMyProfile = () => request('/api/v1/profile/me');
 
 export const updateAbout = (payload: object) =>
   request('/api/v1/profile/about', { method: 'PATCH', body: JSON.stringify(payload) });
+
+export const uploadProfilePhoto = (file: File) => {
+  const formData = new FormData();
+  formData.append('photo', file);
+  return request('/api/v1/profile/photo', { method: 'POST', body: formData });
+};
 
 export const updateProfessional = (payload: object) =>
   request('/api/v1/profile/professional', { method: 'PATCH', body: JSON.stringify(payload) });
