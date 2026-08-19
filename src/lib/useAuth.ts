@@ -12,6 +12,7 @@ export interface ProfileData {
     mobile: string | null;
     country: string | null;
     profile_completion: number;
+    allow_direct_messages: number;
     created_at: string;
   };
   about: Record<string, any> | null;

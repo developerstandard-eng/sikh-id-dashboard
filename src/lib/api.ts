@@ -100,6 +100,15 @@ export const verifyLoginOtp = (email: string, code: string) => ownRequest('/api/
 // --- Profile ---
 export const getMyProfile = () => request('/api/v1/profile/me');
 
+export const updateAccount = (payload: object) =>
+  request('/api/v1/profile/account', { method: 'PATCH', body: JSON.stringify(payload) });
+
+export const updatePrivacy = (payload: object) =>
+  request('/api/v1/profile/privacy', { method: 'PATCH', body: JSON.stringify(payload) });
+
+export const changePassword = (current_password: string, new_password: string) =>
+  request('/api/v1/auth/change-password', { method: 'POST', body: JSON.stringify({ current_password, new_password }) });
+
 export const updateAbout = (payload: object) =>
   request('/api/v1/profile/about', { method: 'PATCH', body: JSON.stringify(payload) });
 
