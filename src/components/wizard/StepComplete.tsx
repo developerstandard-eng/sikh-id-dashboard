@@ -20,7 +20,7 @@ export default function StepComplete({ completion }: { completion: number }) {
         href="/dashboard"
         className="inline-block bg-saffron text-white text-sm font-medium px-6 py-3 rounded-lg hover:bg-saffron-dark transition-colors"
       >
-        Explore your Sikh Group
+        Go to Dashboard
       </Link>
     </div>
   );
