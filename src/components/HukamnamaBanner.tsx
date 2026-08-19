@@ -19,6 +19,7 @@ interface Hukam {
  */
 export default function HukamnamaBanner({ hukam }: { hukam: Hukam | null }) {
   const [dismissed, setDismissed] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(false);
 
   useEffect(() => {
     if (!hukam) return;
@@ -46,10 +47,21 @@ export default function HukamnamaBanner({ hukam }: { hukam: Hukam | null }) {
         Hukamnama · {new Date(hukam.hukam_date).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
       </div>
       {hukam.gurmukhi_text ? (
-        <p className="text-navy text-base leading-relaxed mb-1.5">{hukam.gurmukhi_text}</p>
+        <p className="text-navy text-base leading-relaxed mb-2 whitespace-pre-line">{hukam.gurmukhi_text}</p>
       ) : null}
       {hukam.english_translation ? (
-        <p className="text-sm text-[#6b5638] leading-relaxed">{hukam.english_translation}</p>
+        <>
+          <button
+            type="button"
+            onClick={() => setShowTranslation((v) => !v)}
+            className="text-xs font-medium text-[#c17b1f] hover:underline"
+          >
+            {showTranslation ? 'Hide translation' : 'Show translation'}
+          </button>
+          {showTranslation ? (
+            <p className="text-sm text-[#6b5638] leading-relaxed whitespace-pre-line mt-1.5">{hukam.english_translation}</p>
+          ) : null}
+        </>
       ) : null}
       <div className="text-[11px] text-[#a98957] mt-3">
         {hukam.source_name}
