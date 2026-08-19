@@ -156,6 +156,10 @@ function OtpLoginForm() {
   );
 }
 
+// Email-code login is built and working end-to-end but held back from the
+// UI for now — flip this on when it's ready to ship.
+const OTP_LOGIN_ENABLED = false;
+
 export default function LoginPage() {
   const [mode, setMode] = useState<'password' | 'otp'>('password');
 
@@ -170,24 +174,26 @@ export default function LoginPage() {
           WordPress site's SSO redirect. This form is for direct testing against the API.
         </p>
 
-        <div className="flex mb-6 border border-gray-200 rounded-lg p-1 text-sm">
-          <button
-            type="button"
-            onClick={() => setMode('password')}
-            className={`flex-1 py-1.5 rounded-md font-medium transition-colors ${mode === 'password' ? 'bg-navy text-white' : 'text-gray-500'}`}
-          >
-            Password
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode('otp')}
-            className={`flex-1 py-1.5 rounded-md font-medium transition-colors ${mode === 'otp' ? 'bg-navy text-white' : 'text-gray-500'}`}
-          >
-            Email code
-          </button>
-        </div>
+        {OTP_LOGIN_ENABLED ? (
+          <div className="flex mb-6 border border-gray-200 rounded-lg p-1 text-sm">
+            <button
+              type="button"
+              onClick={() => setMode('password')}
+              className={`flex-1 py-1.5 rounded-md font-medium transition-colors ${mode === 'password' ? 'bg-navy text-white' : 'text-gray-500'}`}
+            >
+              Password
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode('otp')}
+              className={`flex-1 py-1.5 rounded-md font-medium transition-colors ${mode === 'otp' ? 'bg-navy text-white' : 'text-gray-500'}`}
+            >
+              Email code
+            </button>
+          </div>
+        ) : null}
 
-        {mode === 'password' ? <PasswordLoginForm /> : <OtpLoginForm />}
+        {OTP_LOGIN_ENABLED && mode === 'otp' ? <OtpLoginForm /> : <PasswordLoginForm />}
       </div>
     </div>
   );
