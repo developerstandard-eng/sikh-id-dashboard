@@ -32,9 +32,9 @@ export default function ComingSoon({ title, description }: Props) {
   }
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <div className="flex-1 min-h-screen bg-[#f5f6f8]">
+      <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
         <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title={title} />
         <main className="p-8">
           <div className="bg-white rounded-2xl border border-gray-200 p-16 flex flex-col items-center text-center">

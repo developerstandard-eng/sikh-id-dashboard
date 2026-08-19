@@ -49,9 +49,9 @@ export default function ProfileWizardPage() {
   const step = STEPS[currentIndex];
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <div className="flex-1 min-h-screen bg-[#f5f6f8]">
+      <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
         <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Complete your profile" />
 
         <main className="p-8 max-w-2xl mx-auto">

@@ -45,7 +45,7 @@ export default function Sidebar() {
   const router = useRouter();
 
   return (
-    <aside className="w-64 bg-navy text-white flex flex-col shrink-0 min-h-screen">
+    <aside className="w-64 bg-navy text-white flex flex-col shrink-0 h-full overflow-y-auto">
       <div className="px-6 pt-6 pb-5 border-b border-white/10">
         <div className="text-xs tracking-wide text-white/60 uppercase">The Sikh Group</div>
         <div className="text-lg font-semibold">United. Inspired. Empowered.</div>

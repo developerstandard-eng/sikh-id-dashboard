@@ -58,9 +58,9 @@ export default function DashboardPage() {
   const remaining = Object.entries(profile?.sectionStatus || {}).filter(([, done]) => !done);
 
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <div className="flex-1 min-h-screen bg-[#f5f6f8]">
+      <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
         <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Dashboard" />
 
         <main className="p-8">
