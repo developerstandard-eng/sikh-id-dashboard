@@ -170,8 +170,7 @@ export default function LoginPage() {
           The Sikh <span className="text-saffron">ID</span>
         </div>
         <p className="text-sm text-gray-500 mb-6">
-          In production, users normally arrive here already signed in via a Sikh Group
-          WordPress site's SSO redirect. This form is for direct testing against the API.
+          Already have a Sikh ID from another Sikh Group site? Just log in below — your ID works everywhere.
         </p>
 
         {OTP_LOGIN_ENABLED ? (
