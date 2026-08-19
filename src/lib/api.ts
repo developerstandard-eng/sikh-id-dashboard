@@ -77,13 +77,22 @@ async function request(path: string, options: RequestInit = {}, retryOn401 = tru
 // Goes through this app's own /api/login route (not directly to the
 // backend) so the site secret is attached server-side and never reaches
 // the browser bundle — see src/app/api/login/route.ts.
-export const login = (email: string, password: string) =>
-  fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password }) })
-    .then(async (res) => {
-      const data = await res.json().catch(() => null);
-      if (!res.ok) throw new Error(data?.message || data?.error || `Request failed (${res.status})`);
-      return data;
-    });
+async function ownRequest(path: string, body: object) {
+  const res = await fetch(path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new Error(data?.message || data?.error || `Request failed (${res.status})`);
+  return data;
+}
+
+export const login = (email: string, password: string) => ownRequest('/api/login', { email, password });
+
+export const forgotPassword = (email: string) => ownRequest('/api/forgot-password', { email });
+
+export const resetPassword = (token: string, password: string) => ownRequest('/api/reset-password', { token, password });
+
+export const requestLoginOtp = (email: string) => ownRequest('/api/otp/request', { email });
+
+export const verifyLoginOtp = (email: string, code: string) => ownRequest('/api/otp/verify', { email, code });
 
 // --- Profile ---
 export const getMyProfile = () => request('/api/v1/profile/me');
