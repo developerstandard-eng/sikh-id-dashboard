@@ -1,8 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { clearTokens } from '@/lib/api';
+import { clearTokens, getMessagesUnreadCount, getNotifications, getToken } from '@/lib/api';
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard', icon: 'home' },
@@ -43,6 +44,13 @@ function Icon({ name }: { name: string }) {
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [badges, setBadges] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    if (!getToken()) return;
+    getNotifications().then((d) => setBadges((b) => ({ ...b, '/dashboard/notifications': d.unread || 0 }))).catch(() => {});
+    getMessagesUnreadCount().then((d) => setBadges((b) => ({ ...b, '/dashboard/messages': d.unread || 0 }))).catch(() => {});
+  }, [pathname]);
 
   return (
     <aside className="w-64 bg-navy text-white flex flex-col shrink-0 h-full overflow-y-auto">
@@ -74,6 +82,15 @@ export default function Sidebar() {
                 <Icon name={item.icon} />
                 {item.label}
               </span>
+              {badges[item.href] > 0 ? (
+                <span
+                  className={`text-[10px] font-semibold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 ${
+                    active ? 'bg-white/25 text-white' : 'bg-saffron text-white'
+                  }`}
+                >
+                  {badges[item.href] > 9 ? '9+' : badges[item.href]}
+                </span>
+              ) : null}
             </Link>
           );
         })}

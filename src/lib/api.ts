@@ -140,3 +140,33 @@ export const getEvents = (params: Record<string, string> = {}) => {
 };
 export const getNews = () => request('/api/v1/content/news');
 export const getHukamnamaToday = () => request('/api/v1/content/hukamnama/today');
+
+export const rsvpEvent = (id: number) => request(`/api/v1/content/events/${id}/rsvp`, { method: 'POST' });
+export const unrsvpEvent = (id: number) => request(`/api/v1/content/events/${id}/rsvp`, { method: 'DELETE' });
+
+export const saveItem = (itemType: 'event' | 'news', itemId: number) =>
+  request('/api/v1/content/saved', { method: 'POST', body: JSON.stringify({ item_type: itemType, item_id: itemId }) });
+export const unsaveItem = (itemType: 'event' | 'news', itemId: number) =>
+  request(`/api/v1/content/saved/${itemType}/${itemId}`, { method: 'DELETE' });
+export const getSavedItems = () => request('/api/v1/content/saved');
+
+export const getActivity = () => request('/api/v1/content/activity');
+
+export const getNotifications = () => request('/api/v1/content/notifications');
+export const markNotificationRead = (id: number) => request(`/api/v1/content/notifications/${id}/read`, { method: 'POST' });
+export const markAllNotificationsRead = () => request('/api/v1/content/notifications/read-all', { method: 'POST' });
+
+// --- Messages ---
+export const getConversations = () => request('/api/v1/messages/conversations');
+export const startConversation = (sikhId: string) =>
+  request('/api/v1/messages/conversations', { method: 'POST', body: JSON.stringify({ sikh_id: sikhId }) });
+export const getConversationMessages = (convId: number) => request(`/api/v1/messages/conversations/${convId}/messages`);
+export const sendConversationMessage = (convId: number, body: string) =>
+  request(`/api/v1/messages/conversations/${convId}/messages`, { method: 'POST', body: JSON.stringify({ body }) });
+export const markConversationRead = (convId: number) => request(`/api/v1/messages/conversations/${convId}/read`, { method: 'POST' });
+export const getMessagesUnreadCount = () => request('/api/v1/messages/unread-count');
+
+// --- Support ---
+export const getSupportTickets = () => request('/api/v1/support/tickets');
+export const createSupportTicket = (subject: string, message: string) =>
+  request('/api/v1/support/tickets', { method: 'POST', body: JSON.stringify({ subject, message }) });

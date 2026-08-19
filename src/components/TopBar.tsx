@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 interface Props {
   fullName?: string;
   sikhId?: string;
@@ -16,13 +18,12 @@ export default function TopBar({ fullName, sikhId, title }: Props) {
       <h1 className="text-lg font-semibold text-navy">{title}</h1>
       <div className="flex items-center gap-6">
         <button className="text-sm text-gray-500 hover:text-navy">EN</button>
-        <button className="relative text-gray-500 hover:text-navy" aria-label="Notifications">
+        <Link href="/dashboard/notifications" className="relative text-gray-500 hover:text-navy" aria-label="Notifications">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <path d="M6 9a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 13 6 9Z" />
             <path d="M10 19a2 2 0 0 0 4 0" />
           </svg>
-          <span className="absolute -top-1 -right-1 w-2 h-2 bg-saffron rounded-full" />
-        </button>
+        </Link>
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-navy text-white text-xs flex items-center justify-center font-medium">
             {initials}
