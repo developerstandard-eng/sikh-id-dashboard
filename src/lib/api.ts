@@ -15,7 +15,34 @@ export function clearTokens() {
   localStorage.removeItem('sikh_id_refresh_token');
 }
 
-async function request(path: string, options: RequestInit = {}) {
+function getRefreshToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('sikh_id_refresh_token');
+}
+
+// The access token is short-lived (15m — see JWT_ACCESS_TTL on the backend),
+// so any session longer than that needs this to silently mint a new one.
+// Shared across concurrent 401s so they don't each hit /auth/refresh.
+let refreshPromise: Promise<string | null> | null = null;
+
+async function refreshAccessToken(): Promise<string | null> {
+  const refreshToken = getRefreshToken();
+  if (!refreshToken) return null;
+
+  const res = await fetch(`${API_BASE}/api/v1/auth/refresh`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refreshToken }),
+  });
+  if (!res.ok) return null;
+
+  const data = await res.json().catch(() => null);
+  if (!data?.accessToken) return null;
+  localStorage.setItem('sikh_id_access_token', data.accessToken);
+  return data.accessToken;
+}
+
+async function request(path: string, options: RequestInit = {}, retryOn401 = true): Promise<any> {
   const token = getToken();
   const res = await fetch(`${API_BASE}${path}`, {
     ...options,
@@ -25,6 +52,17 @@ async function request(path: string, options: RequestInit = {}) {
       ...(options.headers || {}),
     },
   });
+
+  if (res.status === 401 && retryOn401 && getRefreshToken()) {
+    if (!refreshPromise) {
+      refreshPromise = refreshAccessToken().finally(() => {
+        refreshPromise = null;
+      });
+    }
+    const newToken = await refreshPromise;
+    if (newToken) return request(path, options, false);
+    clearTokens();
+  }
 
   const data = await res.json().catch(() => null);
   if (!res.ok) {
