@@ -20,9 +20,10 @@ export default function ProfileWizardPage() {
 
   // Resume at the first incomplete section rather than always starting at step 0 —
   // matches the "intelligent" progressive-disclosure behaviour from the spec.
-  const initialIndex = profile
-    ? Math.max(0, STEPS.findIndex((s) => !profile.sectionStatus[s.key]))
-    : 0;
+  // findIndex returns -1 once every section is done, which must land on the
+  // "complete" screen (index STEPS.length), not get clamped back to step 0.
+  const firstIncomplete = profile ? STEPS.findIndex((s) => !profile.sectionStatus[s.key]) : 0;
+  const initialIndex = firstIncomplete === -1 ? STEPS.length : firstIncomplete;
   const [stepIndex, setStepIndex] = useState<number | null>(null);
   const currentIndex = stepIndex ?? initialIndex;
 
