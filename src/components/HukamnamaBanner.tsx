@@ -47,7 +47,7 @@ export default function HukamnamaBanner({ hukam }: { hukam: Hukam | null }) {
         Hukamnama · {new Date(hukam.hukam_date).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}
       </div>
       {hukam.gurmukhi_text ? (
-        <p className="text-navy text-base leading-relaxed mb-2 whitespace-pre-line">{hukam.gurmukhi_text}</p>
+        <p className="text-navy text-base leading-relaxed mb-2">{hukam.gurmukhi_text.replace(/\s*\n\s*/g, ' ')}</p>
       ) : null}
       {hukam.english_translation ? (
         <>
@@ -59,7 +59,7 @@ export default function HukamnamaBanner({ hukam }: { hukam: Hukam | null }) {
             {showTranslation ? 'Hide translation' : 'Show translation'}
           </button>
           {showTranslation ? (
-            <p className="text-sm text-[#6b5638] leading-relaxed whitespace-pre-line mt-1.5">{hukam.english_translation}</p>
+            <p className="text-sm text-[#6b5638] leading-relaxed mt-1.5">{hukam.english_translation.replace(/\s*\n\s*/g, ' ')}</p>
           ) : null}
         </>
       ) : null}
