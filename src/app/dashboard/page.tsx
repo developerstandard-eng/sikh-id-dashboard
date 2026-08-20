@@ -167,7 +167,7 @@ export default function DashboardPage() {
                 <div className="text-xs text-gray-400 uppercase tracking-wide mb-3">Quick actions</div>
                 <ul className="space-y-2 text-sm text-navy">
                   {[
-                    { label: 'Update profile', href: '/dashboard/profile' },
+                    { label: 'Update profile', href: '/dashboard/profile?edit=1' },
                     { label: 'Account settings', href: '/dashboard/settings?tab=account' },
                     { label: 'Privacy & security', href: '/dashboard/settings?tab=privacy' },
                     { label: 'Manage preferences', href: '/dashboard/settings?tab=communication' },

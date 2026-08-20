@@ -9,8 +9,15 @@ const INDUSTRIES = [
   'Media & Entertainment', 'Hospitality', 'Retail', 'Manufacturing', 'Professional Services', 'Other',
 ];
 
-export default function StepProfessional({ onNext, onBack }: { onNext: () => void; onBack?: () => void }) {
-  const [form, setForm] = useState({ job_title: '', company: '', industry: '', experience_years: '', linkedin_url: '' });
+export default function StepProfessional({ profile, onNext, onBack }: { profile?: any; onNext: () => void; onBack?: () => void }) {
+  const professional = profile?.professional || {};
+  const [form, setForm] = useState({
+    job_title: professional.job_title || '',
+    company: professional.company || '',
+    industry: professional.industry || '',
+    experience_years: professional.experience_years != null ? String(professional.experience_years) : '',
+    linkedin_url: professional.linkedin_url || '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

@@ -20,11 +20,19 @@ const TOPICS = [
   { key: 'topic_new_projects', label: 'New Sikh Group projects' },
 ];
 
-export default function StepCommunicationPreferences({ onNext, onBack }: { onNext: () => void; onBack?: () => void }) {
-  const [form, setForm] = useState<Record<string, boolean>>({
-    channel_email: true, channel_sms: false, channel_push: false, channel_whatsapp: false,
-    topic_alerts: true, topic_community_news: true, topic_events: true,
-    topic_business: true, topic_awards: true, topic_new_projects: true,
+export default function StepCommunicationPreferences({ profile, onNext, onBack }: { profile?: any; onNext: () => void; onBack?: () => void }) {
+  const [form, setForm] = useState<Record<string, boolean>>(() => {
+    const defaults: Record<string, boolean> = {
+      channel_email: true, channel_sms: false, channel_push: false, channel_whatsapp: false,
+      topic_alerts: true, topic_community_news: true, topic_events: true,
+      topic_business: true, topic_awards: true, topic_new_projects: true,
+    };
+    const commPrefs = profile?.commPrefs || {};
+    const merged = { ...defaults };
+    for (const key of Object.keys(defaults)) {
+      if (commPrefs[key] != null) merged[key] = !!commPrefs[key];
+    }
+    return merged;
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

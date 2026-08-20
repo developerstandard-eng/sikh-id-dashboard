@@ -10,7 +10,15 @@ const STEPS = [
 
 export { STEPS };
 
-export default function WizardProgress({ currentIndex, completion }: { currentIndex: number; completion: number }) {
+export default function WizardProgress({
+  currentIndex,
+  completion,
+  onStepClick,
+}: {
+  currentIndex: number;
+  completion: number;
+  onStepClick?: (index: number) => void;
+}) {
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-2">
@@ -22,13 +30,23 @@ export default function WizardProgress({ currentIndex, completion }: { currentIn
         </span>
       </div>
       <div className="flex gap-1.5">
-        {STEPS.map((s, i) => (
-          <div
-            key={s.key}
-            className={`h-1.5 flex-1 rounded-full ${i <= currentIndex ? 'bg-saffron' : 'bg-gray-200'}`}
-            title={s.label}
-          />
-        ))}
+        {STEPS.map((s, i) =>
+          onStepClick ? (
+            <button
+              key={s.key}
+              type="button"
+              onClick={() => onStepClick(i)}
+              title={`Edit: ${s.label}`}
+              className={`h-1.5 flex-1 rounded-full cursor-pointer hover:opacity-80 ${i <= currentIndex ? 'bg-saffron' : 'bg-gray-200'}`}
+            />
+          ) : (
+            <div
+              key={s.key}
+              className={`h-1.5 flex-1 rounded-full ${i <= currentIndex ? 'bg-saffron' : 'bg-gray-200'}`}
+              title={s.label}
+            />
+          )
+        )}
       </div>
     </div>
   );

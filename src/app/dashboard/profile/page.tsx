@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '@/components/Sidebar';
 import TopBar from '@/components/TopBar';
 import WizardProgress, { STEPS } from '@/components/wizard/WizardProgress';
@@ -27,6 +27,20 @@ export default function ProfileWizardPage() {
   const [stepIndex, setStepIndex] = useState<number | null>(null);
   const currentIndex = stepIndex ?? initialIndex;
 
+  // "Update profile" from the dashboard links here with ?edit=1 so an
+  // already-complete profile opens straight into an editable step instead
+  // of the "you're done" screen. Read directly rather than via
+  // useSearchParams() — matches useAuthFromUrl()'s approach elsewhere in
+  // this app and avoids needing a Suspense boundary.
+  useEffect(() => {
+    if (!profile || stepIndex !== null) return;
+    const wantsEdit = new URLSearchParams(window.location.search).get('edit') === '1';
+    if (wantsEdit && initialIndex === STEPS.length) {
+      setStepIndex(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profile]);
+
   if (loading) return <div className="p-10 text-sm text-gray-400">Loading...</div>;
 
   if (error === 'not_authenticated') {
@@ -45,6 +59,7 @@ export default function ProfileWizardPage() {
     setStepIndex(Math.min(currentIndex + 1, STEPS.length));
   };
   const goBack = () => setStepIndex(Math.max(currentIndex - 1, 0));
+  const goToStep = (index: number) => setStepIndex(index);
 
   const completion = profile?.user.profile_completion ?? 0;
   const step = STEPS[currentIndex];
@@ -56,24 +71,24 @@ export default function ProfileWizardPage() {
         <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Complete your profile" />
 
         <main className="p-8 max-w-2xl mx-auto">
-          {currentIndex < STEPS.length ? (
-            <>
-              <WizardProgress currentIndex={currentIndex} completion={completion} />
-              <div className="bg-white rounded-2xl border border-gray-200 p-8">
-                {step.key === 'about_you' && <StepAboutYou onNext={goNext} onBack={currentIndex > 0 ? goBack : undefined} />}
-                {step.key === 'professional' && <StepProfessional onNext={goNext} onBack={goBack} />}
-                {step.key === 'interests' && <StepInterests onNext={goNext} onBack={goBack} />}
-                {step.key === 'group_preferences' && <StepGroupPreferences onNext={goNext} onBack={goBack} />}
-                {step.key === 'communication_preferences' && <StepCommunicationPreferences onNext={goNext} onBack={goBack} />}
-                {step.key === 'community_profile' && <StepCommunityProfile onNext={goNext} onBack={goBack} />}
+          {profile ? (
+            <WizardProgress currentIndex={currentIndex} completion={completion} onStepClick={goToStep} />
+          ) : null}
+          <div className="bg-white rounded-2xl border border-gray-200 p-8">
+            {currentIndex < STEPS.length && profile ? (
+              <>
+                {step.key === 'about_you' && <StepAboutYou profile={profile} onNext={goNext} onBack={currentIndex > 0 ? goBack : undefined} />}
+                {step.key === 'professional' && <StepProfessional profile={profile} onNext={goNext} onBack={goBack} />}
+                {step.key === 'interests' && <StepInterests profile={profile} onNext={goNext} onBack={goBack} />}
+                {step.key === 'group_preferences' && <StepGroupPreferences profile={profile} onNext={goNext} onBack={goBack} />}
+                {step.key === 'communication_preferences' && <StepCommunicationPreferences profile={profile} onNext={goNext} onBack={goBack} />}
+                {step.key === 'community_profile' && <StepCommunityProfile profile={profile} onNext={goNext} onBack={goBack} />}
                 {step.key === 'final_confirmation' && <StepComplete completion={completion} />}
-              </div>
-            </>
-          ) : (
-            <div className="bg-white rounded-2xl border border-gray-200 p-8">
+              </>
+            ) : (
               <StepComplete completion={completion} />
-            </div>
-          )}
+            )}
+          </div>
         </main>
       </div>
     </div>

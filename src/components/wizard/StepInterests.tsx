@@ -10,8 +10,10 @@ const INTERESTS = [
   'Technology', 'Leadership', 'Media & Entertainment', 'Sport', 'Young Professionals',
 ];
 
-export default function StepInterests({ onNext, onBack }: { onNext: () => void; onBack?: () => void }) {
-  const [selected, setSelected] = useState<string[]>([]);
+export default function StepInterests({ profile, onNext, onBack }: { profile?: any; onNext: () => void; onBack?: () => void }) {
+  const [selected, setSelected] = useState<string[]>(
+    () => (profile?.interests || []).map((i: any) => i.interest_tag)
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

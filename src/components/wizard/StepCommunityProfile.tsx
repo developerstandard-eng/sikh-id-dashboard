@@ -6,9 +6,20 @@ import { updateCommunityProfile } from '@/lib/api';
 
 const CATEGORIES = ['Retail', 'Professional Services', 'Technology', 'Hospitality', 'Healthcare', 'Education', 'Other'];
 
-export default function StepCommunityProfile({ onNext, onBack }: { onNext: () => void; onBack?: () => void }) {
-  const [wantsListing, setWantsListing] = useState<boolean | null>(null);
-  const [form, setForm] = useState({ business_name: '', website: '', business_category: '', city: '', country: '', description: '', contact_details: '' });
+export default function StepCommunityProfile({ profile, onNext, onBack }: { profile?: any; onNext: () => void; onBack?: () => void }) {
+  const directory = profile?.directory || {};
+  const [wantsListing, setWantsListing] = useState<boolean | null>(
+    profile?.directory ? !!directory.wants_listing : null
+  );
+  const [form, setForm] = useState({
+    business_name: directory.business_name || '',
+    website: directory.website || '',
+    business_category: directory.business_category || '',
+    city: directory.city || '',
+    country: directory.country || '',
+    description: directory.description || '',
+    contact_details: directory.contact_details || '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

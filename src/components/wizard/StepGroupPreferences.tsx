@@ -11,8 +11,10 @@ const LIVE_PLATFORMS = [
 
 const FUTURE_PLATFORMS = ['The Sikh Charity', 'The Sikh Bank', 'The Sikh Metaverse'];
 
-export default function StepGroupPreferences({ onNext, onBack }: { onNext: () => void; onBack?: () => void }) {
-  const [selected, setSelected] = useState<string[]>([]);
+export default function StepGroupPreferences({ profile, onNext, onBack }: { profile?: any; onNext: () => void; onBack?: () => void }) {
+  const [selected, setSelected] = useState<string[]>(
+    () => (profile?.groupPrefs || []).filter((p: any) => p.subscribed).map((p: any) => p.platform_name)
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

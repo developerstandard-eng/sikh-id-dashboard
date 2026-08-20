@@ -6,8 +6,15 @@ import { updateAbout, uploadProfilePhoto } from '@/lib/api';
 
 const OCCUPATIONS = ['Professional', 'Entrepreneur', 'Business owner', 'Student', 'Investor', 'Community leader', 'Other'];
 
-export default function StepAboutYou({ onNext, onBack }: { onNext: () => void; onBack?: () => void }) {
-  const [form, setForm] = useState({ photo_url: '', city: '', residence_country: '', occupation_type: '', date_of_birth: '' });
+export default function StepAboutYou({ profile, onNext, onBack }: { profile?: any; onNext: () => void; onBack?: () => void }) {
+  const about = profile?.about || {};
+  const [form, setForm] = useState({
+    photo_url: about.photo_url || '',
+    city: about.city || '',
+    residence_country: about.residence_country || '',
+    occupation_type: about.occupation_type || '',
+    date_of_birth: about.date_of_birth ? String(about.date_of_birth).slice(0, 10) : '',
+  });
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
