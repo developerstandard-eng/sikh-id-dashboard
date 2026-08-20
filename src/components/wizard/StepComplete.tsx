@@ -16,12 +16,20 @@ export default function StepComplete({ completion }: { completion: number }) {
         </div>
         <div className="text-xs text-saffron font-medium mt-1">{completion}%</div>
       </div>
-      <Link
-        href="/dashboard"
-        className="inline-block bg-saffron text-white text-sm font-medium px-6 py-3 rounded-lg hover:bg-saffron-dark transition-colors"
-      >
-        Go to Dashboard
-      </Link>
+      <div className="flex items-center justify-center gap-3">
+        <Link
+          href="/dashboard/id-card"
+          className="inline-block bg-saffron text-white text-sm font-medium px-6 py-3 rounded-lg hover:bg-saffron-dark transition-colors"
+        >
+          View my Sikh ID card
+        </Link>
+        <Link
+          href="/dashboard"
+          className="inline-block bg-white border border-gray-300 text-navy text-sm font-medium px-6 py-3 rounded-lg hover:border-saffron transition-colors"
+        >
+          Go to Dashboard
+        </Link>
+      </div>
     </div>
   );
 }

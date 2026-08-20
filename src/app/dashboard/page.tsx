@@ -163,7 +163,13 @@ export default function DashboardPage() {
               ) : (
                 <div className="bg-white rounded-xl border border-gray-200 p-5">
                   <div className="text-sm font-medium text-navy mb-1">Your Sikh ID is complete 🎉</div>
-                  <p className="text-xs text-gray-500">You're set up across the full Sikh Group ecosystem.</p>
+                  <p className="text-xs text-gray-500 mb-3">You're set up across the full Sikh Group ecosystem.</p>
+                  <Link
+                    href="/dashboard/id-card"
+                    className="block text-center bg-saffron text-white text-xs font-medium py-2 rounded-lg hover:bg-saffron-dark transition-colors"
+                  >
+                    View my Sikh ID card
+                  </Link>
                 </div>
               )}
 

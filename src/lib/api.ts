@@ -169,6 +169,16 @@ export const sendConversationMessage = (convId: number, body: string) =>
 export const markConversationRead = (convId: number) => request(`/api/v1/messages/conversations/${convId}/read`, { method: 'POST' });
 export const getMessagesUnreadCount = () => request('/api/v1/messages/unread-count');
 
+// --- Public card verification (no auth) ---
+export const verifySikhId = async (sikhId: string) => {
+  const res = await fetch(`${API_BASE}/api/v1/verify/${encodeURIComponent(sikhId)}`);
+  if (!res.ok) {
+    if (res.status === 404) return { valid: false as const };
+    throw new Error('Could not reach the verification service');
+  }
+  return res.json();
+};
+
 // --- Support ---
 export const getSupportTickets = () => request('/api/v1/support/tickets');
 export const createSupportTicket = (subject: string, message: string) =>
