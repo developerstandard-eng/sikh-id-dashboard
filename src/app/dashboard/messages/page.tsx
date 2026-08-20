@@ -114,7 +114,7 @@ export default function MessagesPage() {
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
-        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Messages" />
+        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} photoUrl={profile?.about?.photo_url} title="Messages" />
         <main className="p-8">
           <div className="grid grid-cols-[1fr_2fr] gap-5 max-w-4xl">
             <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col">

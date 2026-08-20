@@ -107,7 +107,7 @@ export default function HelpPage() {
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
-        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Help & Support" />
+        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} photoUrl={profile?.about?.photo_url} title="Help & Support" />
         <main className="p-8 max-w-2xl">
           <h3 className="text-sm font-semibold text-navy mb-3">Frequently asked questions</h3>
           <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden mb-8">

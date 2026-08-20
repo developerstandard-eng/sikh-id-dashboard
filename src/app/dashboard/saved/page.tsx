@@ -59,7 +59,7 @@ export default function SavedPage() {
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
-        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Saved & Favourites" />
+        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} photoUrl={profile?.about?.photo_url} title="Saved & Favourites" />
         <main className="p-8 max-w-2xl">
           <p className="text-sm text-gray-500 mb-4">
             Bookmark events and news across the Sikh Group ecosystem and find them all here.

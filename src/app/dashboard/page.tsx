@@ -61,7 +61,7 @@ export default function DashboardPage() {
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
-        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Dashboard" />
+        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} photoUrl={profile?.about?.photo_url} title="Dashboard" />
 
         <main className="p-8">
           <HukamnamaBanner hukam={hukam} />
@@ -121,8 +121,13 @@ export default function DashboardPage() {
               <div className="bg-navy rounded-xl p-5 text-white">
                 <div className="text-xs text-white/50 uppercase tracking-wide mb-3">My profile summary</div>
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center font-medium">
-                    {profile?.user.full_name?.[0] || '?'}
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center font-medium overflow-hidden shrink-0">
+                    {profile?.about?.photo_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={profile.about.photo_url} alt="" className="w-full h-full object-cover" />
+                    ) : (
+                      profile?.user.full_name?.[0] || '?'
+                    )}
                   </div>
                   <div>
                     <div className="font-medium">{profile?.user.full_name}</div>

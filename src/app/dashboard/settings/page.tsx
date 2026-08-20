@@ -62,7 +62,7 @@ export default function SettingsPage() {
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
-        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Settings" />
+        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} photoUrl={profile?.about?.photo_url} title="Settings" />
         <main className="p-8 max-w-2xl">
           <div className="flex mb-6 border border-gray-200 rounded-lg p-1 text-sm bg-white w-fit">
             {(['account', 'privacy', 'communication'] as Tab[]).map((t) => (

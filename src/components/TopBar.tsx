@@ -5,10 +5,11 @@ import Link from 'next/link';
 interface Props {
   fullName?: string;
   sikhId?: string;
+  photoUrl?: string | null;
   title: string;
 }
 
-export default function TopBar({ fullName, sikhId, title }: Props) {
+export default function TopBar({ fullName, sikhId, photoUrl, title }: Props) {
   const initials = fullName
     ? fullName.split(' ').map((n) => n[0]).slice(0, 2).join('').toUpperCase()
     : '—';
@@ -25,8 +26,13 @@ export default function TopBar({ fullName, sikhId, title }: Props) {
           </svg>
         </Link>
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-full bg-navy text-white text-xs flex items-center justify-center font-medium">
-            {initials}
+          <div className="w-9 h-9 rounded-full bg-navy text-white text-xs flex items-center justify-center font-medium overflow-hidden shrink-0">
+            {photoUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={photoUrl} alt="" className="w-full h-full object-cover" />
+            ) : (
+              initials
+            )}
           </div>
           <div className="leading-tight">
             <div className="text-sm font-medium text-navy">{fullName || 'Guest'}</div>

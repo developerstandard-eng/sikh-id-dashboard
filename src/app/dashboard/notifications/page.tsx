@@ -65,7 +65,7 @@ export default function NotificationsPage() {
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
-        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="Notifications" />
+        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} photoUrl={profile?.about?.photo_url} title="Notifications" />
         <main className="p-8 max-w-2xl">
           {unreadCount > 0 ? (
             <div className="flex justify-end mb-3">

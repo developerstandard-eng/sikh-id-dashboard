@@ -41,7 +41,7 @@ export default function ActivityPage() {
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
       <div className="flex-1 h-full overflow-y-auto bg-[#f5f6f8]">
-        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} title="My Activity" />
+        <TopBar fullName={profile?.user.full_name} sikhId={profile?.user.sikh_id} photoUrl={profile?.about?.photo_url} title="My Activity" />
         <main className="p-8 max-w-2xl">
           <p className="text-sm text-gray-500 mb-5">
             A timeline of your engagement across the Sikh Group network.
