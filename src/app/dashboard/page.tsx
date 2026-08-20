@@ -166,10 +166,20 @@ export default function DashboardPage() {
               <div className="bg-white rounded-xl border border-gray-200 p-5">
                 <div className="text-xs text-gray-400 uppercase tracking-wide mb-3">Quick actions</div>
                 <ul className="space-y-2 text-sm text-navy">
-                  {['Update profile', 'Account settings', 'Privacy & security', 'Manage preferences'].map((a) => (
-                    <li key={a} className="flex items-center justify-between py-1.5 cursor-pointer hover:text-saffron">
-                      {a}
-                      <span className="text-gray-300">›</span>
+                  {[
+                    { label: 'Update profile', href: '/dashboard/profile' },
+                    { label: 'Account settings', href: '/dashboard/settings?tab=account' },
+                    { label: 'Privacy & security', href: '/dashboard/settings?tab=privacy' },
+                    { label: 'Manage preferences', href: '/dashboard/settings?tab=communication' },
+                  ].map((a) => (
+                    <li key={a.label}>
+                      <Link
+                        href={a.href}
+                        className="flex items-center justify-between py-1.5 hover:text-saffron"
+                      >
+                        {a.label}
+                        <span className="text-gray-300">›</span>
+                      </Link>
                     </li>
                   ))}
                 </ul>

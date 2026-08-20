@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 import TopBar from '@/components/TopBar';
@@ -34,6 +34,16 @@ export default function SettingsPage() {
   useAuthFromUrl();
   const { profile, loading, error, reload } = useProfile();
   const [tab, setTab] = useState<Tab>('account');
+
+  // Read ?tab= directly rather than via useSearchParams() — matches
+  // useAuthFromUrl()'s approach elsewhere in this app and avoids needing a
+  // Suspense boundary just to pull one query param.
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get('tab');
+    if (requested === 'account' || requested === 'privacy' || requested === 'communication') {
+      setTab(requested);
+    }
+  }, []);
 
   if (loading) return <div className="p-10 text-sm text-gray-400">Loading...</div>;
 
