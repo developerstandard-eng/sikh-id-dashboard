@@ -106,7 +106,7 @@ export function UpcomingEventsCard({ events }: { events: EventItem[] }) {
     <div className="bg-white rounded-xl border border-gray-200 p-5">
       <div className="flex items-center justify-between mb-1">
         <div className="text-xs text-gray-400 uppercase tracking-wide">Upcoming events</div>
-        <Link href="/dashboard/events" className="text-xs text-saffron font-medium hover:underline">View all</Link>
+        <Link href="/dashboard/explore" className="text-xs text-saffron font-medium hover:underline">View all</Link>
       </div>
       {upcoming.map((ev) => <EventCard key={ev.id} ev={ev} />)}
     </div>
@@ -119,7 +119,10 @@ export function BusinessEventsCard({ events }: { events: EventItem[] }) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-5">
-      <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">Business events</div>
+      <div className="flex items-center justify-between mb-1">
+        <div className="text-xs text-gray-400 uppercase tracking-wide">Business events</div>
+        <Link href="/dashboard/explore?type=business" className="text-xs text-saffron font-medium hover:underline">View all</Link>
+      </div>
       {business.map((ev) => <EventCard key={ev.id} ev={ev} />)}
     </div>
   );

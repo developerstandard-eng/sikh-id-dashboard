@@ -73,7 +73,7 @@ export default function NewsCorner({ items }: { items: NewsItem[] }) {
     <div className="bg-white rounded-xl border border-gray-200 p-5">
       <div className="flex items-center justify-between mb-3">
         <div className="text-xs text-gray-400 uppercase tracking-wide">News corner</div>
-        <Link href="/dashboard/news" className="text-xs text-saffron font-medium hover:underline">View all</Link>
+        <Link href="/dashboard/explore" className="text-xs text-saffron font-medium hover:underline">View all</Link>
       </div>
       <div className="space-y-4">
         {items.slice(0, 5).map((n) => <NewsRow key={n.id} n={n} />)}
