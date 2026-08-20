@@ -1,18 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { saveItem, unsaveItem } from '@/lib/api';
 
 const CATEGORY_LABEL: Record<string, string> = {
   news: 'News', update: 'Update', announcement: 'Announcement', press: 'Press',
 };
 
-interface NewsItem {
+export interface NewsItem {
   id: number; title: string; body: string; category: string;
   cta_label: string | null; cta_url: string | null; published_at: string; saved?: number;
 }
 
-function NewsRow({ n }: { n: NewsItem }) {
+export function NewsRow({ n }: { n: NewsItem }) {
   const [saved, setSaved] = useState(!!n.saved);
   const [busy, setBusy] = useState(false);
 
@@ -70,7 +71,10 @@ export default function NewsCorner({ items }: { items: NewsItem[] }) {
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-5">
-      <div className="text-xs text-gray-400 uppercase tracking-wide mb-3">News corner</div>
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-xs text-gray-400 uppercase tracking-wide">News corner</div>
+        <Link href="/dashboard/news" className="text-xs text-saffron font-medium hover:underline">View all</Link>
+      </div>
       <div className="space-y-4">
         {items.slice(0, 5).map((n) => <NewsRow key={n.id} n={n} />)}
       </div>

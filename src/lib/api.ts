@@ -138,7 +138,10 @@ export const getEvents = (params: Record<string, string> = {}) => {
   const qs = new URLSearchParams(params).toString();
   return request(`/api/v1/content/events${qs ? `?${qs}` : ''}`);
 };
-export const getNews = () => request('/api/v1/content/news');
+export const getNews = (params: Record<string, string> = {}) => {
+  const qs = new URLSearchParams(params).toString();
+  return request(`/api/v1/content/news${qs ? `?${qs}` : ''}`);
+};
 export const getHukamnamaToday = () => request('/api/v1/content/hukamnama/today');
 
 export const rsvpEvent = (id: number) => request(`/api/v1/content/events/${id}/rsvp`, { method: 'POST' });
