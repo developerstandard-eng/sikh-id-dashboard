@@ -96,7 +96,7 @@ export default function DashboardPage() {
               </div>
             </div>
             <div className="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-6xl font-bold hidden lg:block">
-              ID
+              SIKH ID
             </div>
           </div>
 
